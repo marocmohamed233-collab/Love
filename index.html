@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+<style>
+body{
+margin:0;
+overflow:hidden;
+background:black;
+color:#ff4da6;
+font-family:monospace;
+text-align:center;
+}
+#matrix{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+z-index:-1;
+}
+.container{
+padding-top:120px;
+}
+#countdown{
+font-size:200px;
+font-weight:bold;
+color:pink;
+text-shadow:0 0 30px pink;
+}
+.word{
+display:none;
+font-size:70px;
+margin:15px;
+color:#ff66cc;
+text-shadow:0 0 20px white;
+}
+#emoji,#album,#heart{display:none;}
+#emoji{font-size:80px;animation:float 3s infinite;}
+@keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-20px);}100%{transform:translateY(0);} }
+.book{
+width:320px;
+margin:auto;
+padding:20px;
+border-radius:25px;
+background:white;
+color:black;
+}
+.book img{width:100%;border-radius:15px;margin-top:10px;}
+#heart{
+font-size:200px;
+color:pink;
+text-shadow:0 0 40px pink;
+}
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+<div class="container">
+<div id="countdown">3</div>
+<div class="word" id="w1">HAPPY</div>
+<div class="word" id="w2">BIRTHDAY</div>
+<div class="word" id="w3">TO</div>
+<div class="word" id="w4">HAYAT</div>
+<div id="emoji">🎂💃🎉</div>
+<div id="album">
+<div class="book">
+<h2>كلمات جميلة 💖</h2>
+<p>كل عام وانتِ أجمل وأغلى انسانة ✨</p>
+<img src="https://via.placeholder.com/300" />
+</div>
+</div>
+<div id="heart">❤️</div>
+</div>
+<script>
+// Matrix effect
+const canvas=document.getElementById('matrix');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const letters="0123456789ABCDEF";
+const fontSize=18;
+let drops=Array(Math.floor(canvas.width/fontSize)).fill(1);
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#ff4da6";
+ctx.font=fontSize+"px monospace";
+for(let i=0;i<drops.length;i++){
+let text=letters[Math.floor(Math.random()*letters.length)];
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+if(drops[i]*fontSize>canvas.height && Math.random()>0.95){drops[i]=0;}
+drops[i]++;
+}
+}
+setInterval(draw,50);// ✅ عد تنازلي ثابت يعمل بدون توقف const countdown=document.getElementById('countdown'); const words=[document.getElementById('w1'),document.getElementById('w2'),document.getElementById('w3'),document.getElementById('w4')]; const emoji=document.getElementById('emoji'); const album=document.getElementById('album'); const heart=document.getElementById('heart');
+
+let time=3; countdown.textContent=time;
+
+function startCountdown(){ let timer=setInterval(()=>{ time--; if(time>=0){ countdown.textContent=time; } if(time<0){ clearInterval(timer); // انفجار بسيط countdown.style.transform="scale(6) rotate(20deg)"; countdown.style.opacity="0"; setTimeout(()=>{ countdown.style.display="none"; // عرض الكلمات كلمة كلمة words.forEach((w,i)=>{ setTimeout(()=>{w.style.display="block";},i*1200); }); setTimeout(()=>{emoji.style.display="block";},5000); setTimeout(()=>{album.style.display="block";},8000); setTimeout(()=>{heart.style.display="block";},11000); },500); } },1000); }
+
+startCountdown(); </script>
+
+</body>
+</html>
